@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">Game The Best</string>
+    <string name="app_name">GameRate</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="upcoming">Upcoming</string>
     <string name="register">register</string>
     <string name="finished">Finished</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -11,8 +10,7 @@
     <string name="favorite">Favorite</string>
     <string name="setting">Settings</string>
     <string name="dark_mode">Dark Mode</string>
-    <string name="something_wrong">Something Wrong</string>
-    <string name="image_description">image-description\n</string>
     <string name="menu_favorite">favorite</string>
-    <string name="text_subtitle">lorem ipsum</string>
+    <string name="games">Games</string>
+    <string name="something_wrong">something wrong</string>
 </resources>

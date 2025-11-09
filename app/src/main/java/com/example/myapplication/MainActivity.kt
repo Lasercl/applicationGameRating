@@ -10,30 +10,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myapplication.R
-import com.example.myapplication.ViewModelFactoryDataStore
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.ui.settings.SettingPreferences
-import com.example.myapplication.ui.settings.SettingViewModel
-import com.example.myapplication.ui.settings.dataStore
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val pref = SettingPreferences.getInstance(application.dataStore)
-        val settingViewModel = ViewModelProvider(this, ViewModelFactoryDataStore(pref)).get(
-            SettingViewModel::class.java
-        )
 
-        // 🔥 Terapkan tema SEBELUM setContentView
-        settingViewModel.getThemeSettings().observe(this) { isDarkModeActive ->
-            if (isDarkModeActive) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
 
         super.onCreate(savedInstanceState)
 
@@ -47,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard,R.id.navigation_favorite,R.id.navigation_setting
+                R.id.navigation_home,R.id.navigation_favorite
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

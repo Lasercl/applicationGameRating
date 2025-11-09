@@ -6,18 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
-import com.example.myapplication.ViewModelFactory
-import com.example.myapplication.adapter.ListGamesAdapter
+import com.example.myapplication.ui.ListGamesAdapter
 import com.example.myapplication.databinding.FragmentListEventBinding
 import com.example.gamesapp.detail.DetailActivity
 import com.example.myapplication.core.data.Resource
-import com.example.myapplication.core.data.domain.model.Game
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListGamesFragment : Fragment() {
-    private lateinit var listGamesViewModel :ListGamesViewModel
+    private val listGamesViewModel :ListGamesViewModel by viewModel()
     private var _binding: FragmentListEventBinding? = null
 
     // This property is only valid between onCreateView and
@@ -39,7 +37,6 @@ class ListGamesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val factory = ViewModelFactory.getInstance(requireActivity())
         val gamesAdapter = ListGamesAdapter()
         gamesAdapter.setOnItemClickListener { selectedData ->
             val intent = Intent(activity, DetailActivity::class.java)
@@ -48,7 +45,6 @@ class ListGamesFragment : Fragment() {
 
         }
 
-        listGamesViewModel = ViewModelProvider(this, factory)[ListGamesViewModel::class.java]
 
 
         listGamesViewModel.game.observe(viewLifecycleOwner) { games ->

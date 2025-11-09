@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_subtitle">lorem ipsum\n</string>
+    <string name="something_wrong">Something Wrong</string>
+    <string name="menu_favorite">favorite</string>
+    <string name="image_description">image description</string>
+</resources>

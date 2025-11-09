@@ -9,7 +9,7 @@
 //import androidx.lifecycle.ViewModelProvider
 //import androidx.recyclerview.widget.LinearLayoutManager
 //import com.example.myapplication.DetailActivity
-//import com.example.myapplication.adapter.ListGamesAdapter
+//import com.example.myapplication.ui.ListGamesAdapter
 //import com.example.myapplication.databinding.FragmentFinishedEventBinding
 //import com.example.myapplication.ui.event.FinishedEventViewModel
 //

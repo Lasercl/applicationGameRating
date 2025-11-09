@@ -20,5 +20,9 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "My Application"
+//include(":app",":favorite")
+//include(":core")
+//include(":favorite")
 include(":app")
- 
+include(":core")
+include(":favorite")
