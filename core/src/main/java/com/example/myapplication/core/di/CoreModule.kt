@@ -9,6 +9,8 @@ import com.example.myapplication.core.data.source.remote.RemoteDataSource
 import com.example.myapplication.core.repository.IGamesRepository
 import com.example.myapplication.core.utils.AppExecutors
 import com.example.myapplication.retrofit.ApiService
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -19,10 +21,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 val databaseModule = module {
     factory { get<GamesDatabase>().GamesDao() }
     single {
+        val context = androidContext()
+        context.deleteDatabase("Games.db") // <--- hapus file lama (non-encrypted)
+
+        val passphrase: ByteArray = SQLiteDatabase.getBytes("dicoding".toCharArray())
+        val factory = SupportFactory(passphrase)
         Room.databaseBuilder(
             androidContext(),
             GamesDatabase::class.java, "Games.db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration()
+            .openHelperFactory(factory)
+            .build()
     }
 }
 
