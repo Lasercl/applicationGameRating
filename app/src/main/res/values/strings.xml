@@ -13,4 +13,6 @@
     <string name="menu_favorite">favorite</string>
     <string name="games">Games</string>
     <string name="something_wrong">something wrong</string>
+    <string name="power_connected">Power connected!</string>
+    <string name="power_disconnected">Power disconnected!</string>
 </resources>

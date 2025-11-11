@@ -9,6 +9,9 @@ import com.example.myapplication.core.data.source.remote.RemoteDataSource
 import com.example.myapplication.core.repository.IGamesRepository
 import com.example.myapplication.core.utils.AppExecutors
 import com.example.myapplication.retrofit.ApiService
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -19,15 +22,28 @@ import retrofit2.converter.gson.GsonConverterFactory
 val databaseModule = module {
     factory { get<GamesDatabase>().GamesDao() }
     single {
+        val context = androidContext()
+        context.deleteDatabase("Games.db") // <--- hapus file lama (non-encrypted)
+
+        val passphrase: ByteArray = SQLiteDatabase.getBytes("dicoding".toCharArray())
+        val factory = SupportFactory(passphrase)
         Room.databaseBuilder(
             androidContext(),
             GamesDatabase::class.java, "Games.db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration()
+            .openHelperFactory(factory)
+            .build()
     }
 }
 
 val networkModule = module {
     single {
+        val hostname = "api.rawg.io"
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostname, "sha256/C6lwlbvuGDHvMA0ZDlyui0NI6TX2XKXitrKamh2jayM=")
+            .add(hostname, "sha256/kIdp6NNEd8wsugYyyIYFsi1ylMCED3hZbSR8ZFsa/A4=")
+            .add(hostname, "sha256/mEflZT5enoR1FuXLgYYGqnVEoZvmf9c2bVBpiOjYQ0c=")
+            .build()
         val loggingInterceptor =
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -44,6 +60,7 @@ val networkModule = module {
                 val newRequest = original.newBuilder().url(newUrl).build()
                 chain.proceed(newRequest)
             }
+            .certificatePinner(certificatePinner)
             .build()
 
         val retrofit = Retrofit.Builder()
