@@ -10,7 +10,6 @@ plugins {
 android {
     namespace = "com.example.myapplication"
     compileSdk = 36
-    dynamicFeatures += setOf(":favorite")
 
     defaultConfig {
         applicationId = "com.example.myapplication"
